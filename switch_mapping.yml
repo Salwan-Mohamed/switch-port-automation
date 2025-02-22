@@ -1,0 +1,4 @@
+switch_mapping:
+  10.1.127.248: ["roomAG2", "roomAG11"]
+  10.1.127.247: ["roomBG5", "roomBG10"]
+

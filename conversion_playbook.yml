@@ -1,0 +1,22 @@
+---
+- name: Convert Wall Point to Switch Port
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - port_mapping.yml
+  
+  tasks:
+    - name: Convert wall point to switch port
+      set_fact:
+        port_number: "{{ port_mapping.wall_to_switch[wall_point] }}"
+      when: wall_point is defined
+      
+    - name: Fail if wall point not found
+      fail:
+        msg: "Wall point {{ wall_point }} not found in mapping"
+      when: port_number is not defined
+
+    - name: Set device type based on room and wall point
+      set_fact:
+        device_type: "{{ port_mapping[room][wall_point] }}"
+      when: room is defined and wall_point is defined
